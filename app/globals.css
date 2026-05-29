@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper-cream: #fff6e5;
+  --ink-black: #111111;
+  --trato-orange: #ff6b1a;
+  --pen-blue: #1f4e8c;
+  --soft-sand: #f3e2c7;
+  --soft-gray: #e8e2d6;
+  --success-green: #2e8b57;
+  --warning-yellow: #ffd166;
+  --danger-red: #ef476f;
+  --border-heavy: 3px;
+  --shadow-hard: 4px 4px 0 0 var(--ink-black);
+  --shadow-hard-lg: 8px 8px 0 0 var(--ink-black);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper-cream);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--paper-cream);
+  color: var(--ink-black);
+  font-family: Inter, Arial, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--trato-orange);
+  color: var(--ink-black);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper-cream);
+  border-left: 3px solid var(--ink-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ink-black);
+  border: 2px solid var(--paper-cream);
+}
+
+.trato-focus {
+  @apply focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-warning-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-paper-cream;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.document-paper {
+  background:
+    linear-gradient(rgba(17, 17, 17, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.03) 1px, transparent 1px),
+    var(--paper-cream);
+  background-size: 22px 22px;
+}
+
+.a4-ratio {
+  aspect-ratio: 210 / 297;
+}

@@ -1,0 +1,15 @@
+export type TratoStatus =
+  | "novo"
+  | "briefing_enviado"
+  | "briefing_recebido"
+  | "em_analise"
+  | "escopo_aprovado"
+  | "contrato_gerado"
+  | "em_desenvolvimento"
+  | "entregue"
+  | "cancelado"
+  | "rascunho"
+  | "gerado"
+  | "enviado"
+  | "assinado_externamente"
+  | "arquivado";
