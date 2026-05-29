@@ -32,7 +32,7 @@ export default async function DocumentDetailPage({ params }: { params: Promise<{
       <div className="grid gap-6 xl:grid-cols-document-sidebar">
         <DocumentPreview title={document.type === "Contrato" ? "Contrato de Serviço" : document.title} subtitle={document.fileName} document={document} />
         <div className="grid h-fit gap-6">
-          <DocumentActions />
+          <DocumentActions documentId={document.id} />
           <TratoWindow title="metadados">
             <dl className="grid gap-4">
               {[

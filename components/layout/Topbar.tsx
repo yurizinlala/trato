@@ -1,7 +1,8 @@
 "use client";
 
-import { Bell, Menu } from "lucide-react";
+import { Bell, LogOut, Menu } from "lucide-react";
 import { useState } from "react";
+import { signOut } from "@/lib/auth/actions";
 import { internalRoutes } from "@/lib/routes";
 import { GlobalSearch } from "@/components/layout/GlobalSearch";
 import { TratoButton } from "@/components/ui/TratoButton";
@@ -43,6 +44,18 @@ export function Topbar() {
           </TratoButton>
           <TratoButton className="hidden sm:inline-flex" href="/projetos/novo">
             Novo trato
+          </TratoButton>
+          <TratoButton
+            className="h-11 w-11 p-0"
+            variant="outline"
+            size="sm"
+            type="button"
+            aria-label="Sair"
+            onClick={() => {
+              void signOut();
+            }}
+          >
+            <LogOut className="h-5 w-5" />
           </TratoButton>
         </div>
       </div>

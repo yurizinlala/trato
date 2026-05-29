@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FileDown, FileText, Save, Send, ShieldCheck } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { documentActionsUnavailableMessage } from "@/lib/document-placeholders";
 import { contractSchema, type ContractFormValues } from "@/lib/schemas/contract.schema";
 import type { Client } from "@/types/client";
 import type { Contract } from "@/types/contract";
@@ -19,9 +18,10 @@ type ContractFormProps = {
   clients: Client[];
   projects: Project[];
   contract?: Contract;
+  documentId?: string;
 };
 
-export function ContractForm({ clients, projects, contract }: ContractFormProps) {
+export function ContractForm({ clients, projects, contract, documentId }: ContractFormProps) {
   const fallbackClient = clients[0];
   const fallbackProject = projects[0];
   const {
@@ -50,7 +50,7 @@ export function ContractForm({ clients, projects, contract }: ContractFormProps)
     }
   });
 
-  const pendingAction = () => window.alert(documentActionsUnavailableMessage);
+  const downloadId = documentId ?? contract?.id ?? "cont-portfolio";
 
   return (
     <TratoWindow title="parâmetros.da.minuta" tone="default">
@@ -101,8 +101,8 @@ export function ContractForm({ clients, projects, contract }: ContractFormProps)
         {isSubmitSuccessful ? <TratoNotice tone="success">Contrato validado localmente.</TratoNotice> : null}
         <div className="grid gap-3 sm:grid-cols-2">
           <TratoButton type="submit" icon={<Save className="h-5 w-5" />}>Salvar rascunho</TratoButton>
-          <TratoButton type="button" variant="secondary" icon={<FileText className="h-5 w-5" />} onClick={pendingAction}>Gerar PDF</TratoButton>
-          <TratoButton type="button" variant="secondary" icon={<FileDown className="h-5 w-5" />} onClick={pendingAction}>Gerar DOCX</TratoButton>
+          <TratoButton href={`/api/documents/${downloadId}/pdf`} variant="secondary" icon={<FileText className="h-5 w-5" />}>Gerar PDF</TratoButton>
+          <TratoButton href={`/api/documents/${downloadId}/docx`} variant="secondary" icon={<FileDown className="h-5 w-5" />}>Gerar DOCX</TratoButton>
           <TratoButton type="button" variant="outline" icon={<Send className="h-5 w-5" />}>Marcar como enviado</TratoButton>
           <TratoButton type="button" variant="success" icon={<ShieldCheck className="h-5 w-5" />}>Marcar como assinado externamente</TratoButton>
         </div>

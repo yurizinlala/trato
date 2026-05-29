@@ -1,6 +1,6 @@
 # Trato
 
-Primeira versão funcional do Trato: ferramenta interna para freelancer/desenvolvedor brasileiro organizar clientes, projetos, briefings, escopos, preços, contratos e documentos.
+Ferramenta interna para freelancer/desenvolvedor brasileiro organizar clientes, projetos, briefings, escopos, preços, contratos e documentos.
 
 O cliente externo não tem portal. Ele acessa apenas o formulário público de briefing em `/briefing/[token]`.
 
@@ -11,9 +11,13 @@ O cliente externo não tem portal. Ele acessa apenas o formulário público de b
 - Tailwind CSS
 - React Hook Form
 - Zod
-- Dados mockados centralizados em `lib/mock-data.ts`
+- Supabase Auth/Postgres/Storage
+- PDF real com `pdf-lib`
+- DOCX real com `docx`
 
-## Como rodar
+Ficam fora do produto: pagamentos, envio de e-mail e assinatura dentro do app.
+
+## Como Rodar
 
 ```bash
 npm install
@@ -28,6 +32,33 @@ Build de produção:
 npm run build
 npm run start
 ```
+
+## Supabase
+
+Copie `.env.example` para `.env.local` e preencha:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+```
+
+Depois aplique a migration:
+
+```text
+supabase/migrations/202605290001_initial_schema.sql
+```
+
+Sem essas variáveis, o app continua abrindo em modo local de desenvolvimento com dados mockados/sessionStorage. Com as variáveis configuradas, o login usa Supabase Auth, rotas internas passam pelo middleware de sessão e clientes/projetos/checklist/histórico são sincronizados com Supabase.
+
+## Documentos
+
+Os botões de PDF/DOCX usam rotas reais:
+
+- `/api/documents/[id]/pdf`
+- `/api/documents/[id]/docx`
+
+Quando `SUPABASE_SERVICE_ROLE_KEY` está configurada, os arquivos gerados também são enviados para o bucket privado `documents` no Supabase Storage.
 
 ## Rotas
 
@@ -53,9 +84,9 @@ npm run start
 - `/documentos/[id]`
 - `/configuracoes`
 
-## Design system
+## Design System
 
-Os padrões visuais do ZIP do Stitch foram recriados como componentes React reutilizáveis, sem copiar páginas HTML estáticas:
+Os padrões visuais do Trato estão concentrados em componentes React reutilizáveis:
 
 - `TratoButton`
 - `TratoCard`
@@ -74,25 +105,3 @@ Os padrões visuais do ZIP do Stitch foram recriados como componentes React reut
 - `PublicShell`
 
 Tokens de cor, borda, sombra, raio, tipografia e espaçamento estão em `tailwind.config.ts`, `app/globals.css` e `lib/design-tokens.ts`.
-
-## Dados e validação
-
-Os dados iniciais ficam em `lib/mock-data.ts`:
-
-- 4 clientes
-- 5 projetos
-- 4 briefings
-- 4 contratos
-- 5 documentos
-- métricas e atividades do dashboard
-
-Schemas Zod ficam em `lib/schemas`. Os formulários usam React Hook Form com Zod.
-
-A interação mockada de clientes, projetos e checklist de contrato usa `TratoDataProvider` com persistência em `sessionStorage`. Nada é enviado para banco real nesta etapa.
-
-## Preparado para próximas etapas
-
-- Substituir `lib/mock-data.ts` por repositórios/queries Supabase.
-- Conectar ações de criar/editar/salvar a Server Actions ou API routes.
-- Implementar geração real de PDF/DOCX a partir de `DocumentPreview`, `ContractPreview` e `lib/document-placeholders.ts`.
-- Integrar envio externo e marcação de assinatura fora do sistema.

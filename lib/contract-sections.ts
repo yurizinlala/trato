@@ -21,5 +21,3 @@ export const contractSections = [
   "Foro"
 ];
 
-export const documentActionsUnavailableMessage =
-  "Função será implementada na próxima etapa.";

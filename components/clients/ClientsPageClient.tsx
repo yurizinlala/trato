@@ -129,8 +129,8 @@ export function ClientsPageClient() {
           <div className="flex flex-wrap gap-3">
             <TratoButton
               variant="danger"
-              onClick={() => {
-                if (pendingDelete) deleteClient(pendingDelete.id);
+              onClick={async () => {
+                if (pendingDelete) await deleteClient(pendingDelete.id);
                 setPendingDelete(null);
               }}
             >

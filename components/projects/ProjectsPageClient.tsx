@@ -123,8 +123,8 @@ export function ProjectsPageClient() {
           <div className="flex flex-wrap gap-3">
             <TratoButton
               variant="danger"
-              onClick={() => {
-                if (pendingDelete) deleteProject(pendingDelete.id);
+              onClick={async () => {
+                if (pendingDelete) await deleteProject(pendingDelete.id);
                 setPendingDelete(null);
               }}
             >

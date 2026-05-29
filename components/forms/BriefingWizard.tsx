@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Send } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { briefingFeatures, briefingGoals, budgetRanges, projectTypes } from "@/lib/constants";
+import { submitPublicBriefing } from "@/lib/briefings/actions";
 import { formatBrazilPhone, formatCpfCnpj, onlyDigits } from "@/lib/formatters";
 import { briefingSchema, type BriefingFormValues } from "@/lib/schemas/briefing.schema";
 import { cn } from "@/lib/utils";
@@ -36,7 +37,7 @@ const stepFields: Record<number, (keyof BriefingFormValues)[]> = {
   6: ["name", "document", "email", "whatsapp", "projectType", "objective", "goals", "features", "desiredDeadline", "budgetRange"]
 };
 
-export function BriefingWizard() {
+export function BriefingWizard({ token = "public" }: { token?: string }) {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const {
@@ -101,7 +102,13 @@ export function BriefingWizard() {
 
   return (
     <TratoWindow title={`passo ${step + 1} de ${steps.length} — ${steps[step]}`} tone="default" className="w-full">
-      <form className="grid gap-8" onSubmit={handleSubmit(() => setSubmitted(true))}>
+      <form
+        className="grid gap-8"
+        onSubmit={handleSubmit(async (formValues) => {
+          await submitPublicBriefing(token, formValues);
+          setSubmitted(true);
+        })}
+      >
         <TratoProgress value={((step + 1) / steps.length) * 100} label={steps[step]} />
 
         {step === 0 ? (

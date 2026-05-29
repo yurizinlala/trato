@@ -1,4 +1,4 @@
-import { contractSections } from "@/lib/document-placeholders";
+import { contractSections } from "@/lib/contract-sections";
 import { formatCurrency } from "@/lib/utils";
 import type { Contract } from "@/types/contract";
 

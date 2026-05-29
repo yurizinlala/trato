@@ -5,7 +5,7 @@ import { ContractForm } from "@/components/forms/ContractForm";
 import { ContractPreview } from "@/components/documents/ContractPreview";
 import { TratoBadge } from "@/components/ui/TratoBadge";
 import { TratoWindow } from "@/components/ui/TratoWindow";
-import { clients, getClient, getContract, getProject, projects } from "@/lib/mock-data";
+import { clients, documents, getClient, getContract, getProject, projects } from "@/lib/mock-data";
 import { formatDate } from "@/lib/utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
@@ -19,6 +19,7 @@ export default async function ContractDetailPage({ params }: { params: Promise<{
   const contract = getContract(id);
   const client = getClient(contract.clientId);
   const project = getProject(contract.projectId);
+  const document = documents.find((item) => item.contractId === contract.id);
 
   return (
     <AppShell>
@@ -29,7 +30,7 @@ export default async function ContractDetailPage({ params }: { params: Promise<{
         actions={<TratoBadge status={contract.status} />}
       />
       <div className="grid gap-6 xl:grid-cols-contract-editor">
-        <ContractForm clients={clients} projects={projects} contract={contract} />
+        <ContractForm clients={clients} projects={projects} contract={contract} documentId={document?.id ?? contract.id} />
         <TratoWindow title="visualização.a4" tone="blue" bodyClassName="bg-soft-gray p-6">
           <ContractPreview contract={contract} />
         </TratoWindow>

@@ -17,8 +17,8 @@ export function NewProjectScreen() {
       <PageHeader title="Novo projeto" eyebrow="Criar workspace" />
       <ProjectForm
         clients={clients}
-        onSubmit={(values) => {
-          const project = createProject(values);
+        onSubmit={async (values) => {
+          const project = await createProject(values);
           router.push(`/projetos/${project.id}`);
         }}
       />
@@ -51,8 +51,8 @@ export function EditProjectScreen({ projectId }: { projectId: string }) {
           desiredDeadline: project.desiredDeadline,
           notes: project.scope.notes
         }}
-        onSubmit={(values) => {
-          updateProject(project.id, values);
+        onSubmit={async (values) => {
+          await updateProject(project.id, values);
           router.push(`/projetos/${project.id}`);
         }}
       />

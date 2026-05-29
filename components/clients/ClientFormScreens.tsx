@@ -16,8 +16,8 @@ export function NewClientScreen() {
       <PageTitle title="Novo cliente | Trato" />
       <PageHeader title="Novo cliente" eyebrow="Cadastro interno" />
       <ClientForm
-        onSubmit={(values) => {
-          const client = createClient(values);
+        onSubmit={async (values) => {
+          const client = await createClient(values);
           router.push(`/clientes/${client.id}`);
         }}
       />
@@ -51,8 +51,8 @@ export function EditClientScreen({ clientId }: { clientId: string }) {
           address: client.address,
           notes: client.notes
         }}
-        onSubmit={(values) => {
-          updateClient(client.id, values);
+        onSubmit={async (values) => {
+          await updateClient(client.id, values);
           router.push(`/clientes/${client.id}`);
         }}
       />

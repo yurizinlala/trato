@@ -272,8 +272,8 @@ export function ProjectDetailClient({ projectId }: { projectId: string }) {
           <div className="flex flex-wrap gap-3">
             <TratoButton
               variant="danger"
-              onClick={() => {
-                deleteProject(project.id);
+              onClick={async () => {
+                await deleteProject(project.id);
                 router.push("/projetos");
               }}
             >

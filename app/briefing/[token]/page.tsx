@@ -6,7 +6,9 @@ export const metadata: Metadata = {
   title: "Briefing público"
 };
 
-export default function PublicBriefingPage() {
+export default async function PublicBriefingPage({ params }: { params: Promise<{ token: string }> }) {
+  const { token } = await params;
+
   return (
     <PublicShell>
       <div className="grid max-w-3xl gap-3 text-center">
@@ -15,7 +17,7 @@ export default function PublicBriefingPage() {
           Preencha os dados abaixo para que possamos entender melhor sua necessidade e preparar uma proposta sob medida.
         </p>
       </div>
-      <BriefingWizard />
+      <BriefingWizard token={token} />
     </PublicShell>
   );
 }
